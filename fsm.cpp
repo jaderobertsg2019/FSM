@@ -8,9 +8,9 @@
 #include "executedfa.h"
 #include "executenfa.h"
 using namespace std;
-
+// test
 //***********************************************************************************************************************************************************************************
-//DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING
+// DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING DFA PARSING
 //***********************************************************************************************************************************************************************************
 
 int DfaParser::findStateInListOfStates(string state1)
@@ -25,7 +25,7 @@ int DfaParser::findStateInListOfStates(string state1)
 
 void DfaParser::updateTransition(string input, string state2, int i)
 {
-	transitionNode* newTransitionNode = new transitionNode;
+	transitionNode *newTransitionNode = new transitionNode;
 	newTransitionNode->transitionInput = input;
 	newTransitionNode->transitionStateName = state2;
 	listOfStates[i]->listOfTransitions.push_back(newTransitionNode);
@@ -43,7 +43,7 @@ void DfaParser::fill_out_states_x_input()
 	{
 		for (int j = 0; j < inputAlphabet.size(); j++)
 		{
-			states_x_input_node* newNode = new states_x_input_node;
+			states_x_input_node *newNode = new states_x_input_node;
 			newNode->stateName = states[i];
 			newNode->input = inputAlphabet[j];
 			states_x_input.push_back(newNode);
@@ -53,7 +53,7 @@ void DfaParser::fill_out_states_x_input()
 
 void DfaParser::parse_dfa()
 {
-	//dfa -> q sigma delta start_state f
+	// dfa -> q sigma delta start_state f
 	parse_q();
 	parse_sigma();
 	fill_out_states_x_input();
@@ -64,7 +64,7 @@ void DfaParser::parse_dfa()
 
 void DfaParser::parse_q()
 {
-	//q -> Q EQUAL LBRACE list LBRACE SEMICOLON
+	// q -> Q EQUAL LBRACE list LBRACE SEMICOLON
 	expect("Q");
 	expect("=");
 	expect("{");
@@ -75,7 +75,7 @@ void DfaParser::parse_q()
 
 void DfaParser::parse_sigma()
 {
-	//sigma -> SIGMA EQUAL LBRACE list RBRACE SEMICOLON
+	// sigma -> SIGMA EQUAL LBRACE list RBRACE SEMICOLON
 	expect("SIGMA");
 	expect("=");
 	expect("{");
@@ -86,7 +86,7 @@ void DfaParser::parse_sigma()
 
 void DfaParser::parse_delta()
 {
-	//delta -> DELTA EQUAL LBRACE transitions RBRACE SEMICOLON
+	// delta -> DELTA EQUAL LBRACE transitions RBRACE SEMICOLON
 	expect("DELTA");
 	expect("=");
 	expect("{");
@@ -97,7 +97,7 @@ void DfaParser::parse_delta()
 
 void DfaParser::parse_start_state()
 {
-	//start_state -> START_STATE EQUAL primary SEMICOLON
+	// start_state -> START_STATE EQUAL primary SEMICOLON
 	expect("START_STATE");
 	expect("=");
 	string temp = parse_primary();
@@ -114,7 +114,7 @@ void DfaParser::parse_start_state()
 
 void DfaParser::parse_f()
 {
-	//f	-> F EQUAL LBRACE list RBRACE SEMICOLON
+	// f	-> F EQUAL LBRACE list RBRACE SEMICOLON
 	expect("F");
 	expect("=");
 	expect("{");
@@ -132,12 +132,12 @@ void DfaParser::parse_f()
 
 void DfaParser::parse_list(string listType)
 {
-	//list -> primary COMMA list || primary
+	// list -> primary COMMA list || primary
 	string newPrimary = parse_primary();
 	if (listType == "Q")
 	{
 		states.push_back(newPrimary);
-		stateNode* temp = new stateNode;
+		stateNode *temp = new stateNode;
 		temp->stateName = newPrimary;
 		listOfStates.push_back(temp);
 	}
@@ -169,7 +169,7 @@ void DfaParser::parse_list(string listType)
 
 void DfaParser::parse_transitions()
 {
-	//transitions -> transiton COMMA transitions || transition
+	// transitions -> transiton COMMA transitions || transition
 	parse_transition();
 	if (peek(1) == ",")
 	{
@@ -182,7 +182,7 @@ void DfaParser::parse_transitions()
 	}
 }
 
-void DfaParser::validateDeltaInput(pairToRemove* temp)
+void DfaParser::validateDeltaInput(pairToRemove *temp)
 {
 	bool syntaxError = true;
 	for (int i = 0; i < states_x_input.size(); i++)
@@ -201,8 +201,8 @@ void DfaParser::validateDeltaInput(pairToRemove* temp)
 
 void DfaParser::parse_transition()
 {
-	pairToRemove* temp = new pairToRemove;
-	//transition->DELTA LPAREN primary COMMA,
+	pairToRemove *temp = new pairToRemove;
+	// transition->DELTA LPAREN primary COMMA,
 	expect("DELTA");
 	expect("(");
 	string state1 = parse_primary();
@@ -232,7 +232,7 @@ void DfaParser::parse_transition()
 
 string DfaParser::parse_primary()
 {
-	//primary -> ID || NUM 
+	// primary -> ID || NUM
 	return expect("ID");
 }
 
@@ -311,7 +311,7 @@ int DfaParser::find(vector<string> list, string str)
 }
 
 //***********************************************************************************************************************************************************************************
-//DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA
+// DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA COMPUTATION DFA
 //***********************************************************************************************************************************************************************************
 
 int dfaexecution::findCurrentStateInList(DfaParser M, string currentState)
@@ -354,7 +354,7 @@ bool dfaexecution::startExecution(string w, DfaParser M)
 			exit(-1);
 		}
 		currentState = M.listOfStates[i]->listOfTransitions[j]->transitionStateName;
-	}	
+	}
 
 	for (int i = 0; i < M.finalStates.size(); i++)
 	{
@@ -367,7 +367,7 @@ bool dfaexecution::startExecution(string w, DfaParser M)
 }
 
 //***********************************************************************************************************************************************************************************
-//NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING
+// NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING NFA PARSING
 //***********************************************************************************************************************************************************************************
 
 int NfaParser::findStateInListOfStates(string state1)
@@ -382,7 +382,7 @@ int NfaParser::findStateInListOfStates(string state1)
 
 void NfaParser::updateTransition(string input, string state2, int i)
 {
-	transitionNode* newTransitionNode = new transitionNode;
+	transitionNode *newTransitionNode = new transitionNode;
 	newTransitionNode->transitionInput = input;
 	newTransitionNode->transitionStateName = state2;
 	listOfStates[i]->listOfTransitions.push_back(newTransitionNode);
@@ -396,7 +396,7 @@ void NfaParser::updateListOfStates(string state1, string input, string state2)
 
 void NfaParser::parse_nfa()
 {
-	//dfa -> q sigma delta start_state f
+	// dfa -> q sigma delta start_state f
 	parse_q();
 	parse_sigma();
 	parse_delta();
@@ -406,7 +406,7 @@ void NfaParser::parse_nfa()
 
 void NfaParser::parse_q()
 {
-	//q -> Q EQUAL LBRACE list LBRACE SEMICOLON
+	// q -> Q EQUAL LBRACE list LBRACE SEMICOLON
 	expect("Q");
 	expect("=");
 	expect("{");
@@ -417,7 +417,7 @@ void NfaParser::parse_q()
 
 void NfaParser::parse_sigma()
 {
-	//sigma -> SIGMA EQUAL LBRACE list RBRACE SEMICOLON
+	// sigma -> SIGMA EQUAL LBRACE list RBRACE SEMICOLON
 	expect("SIGMA");
 	expect("=");
 	expect("{");
@@ -428,7 +428,7 @@ void NfaParser::parse_sigma()
 
 void NfaParser::parse_delta()
 {
-	//delta -> DELTA EQUAL LBRACE transitions RBRACE SEMICOLON
+	// delta -> DELTA EQUAL LBRACE transitions RBRACE SEMICOLON
 	expect("DELTA");
 	expect("=");
 	expect("{");
@@ -439,7 +439,7 @@ void NfaParser::parse_delta()
 
 void NfaParser::parse_start_state()
 {
-	//start_state -> START_STATE EQUAL primary SEMICOLON
+	// start_state -> START_STATE EQUAL primary SEMICOLON
 	expect("START_STATE");
 	expect("=");
 	string newPrimary = parse_primary();
@@ -453,7 +453,7 @@ void NfaParser::parse_start_state()
 
 void NfaParser::parse_f()
 {
-	//f	-> F EQUAL LBRACE list RBRACE SEMICOLON
+	// f	-> F EQUAL LBRACE list RBRACE SEMICOLON
 	expect("F");
 	expect("=");
 	expect("{");
@@ -476,12 +476,12 @@ string NfaParser::peek(int i)
 
 void NfaParser::parse_list(string listType)
 {
-	//list -> primary COMMA list || primary
+	// list -> primary COMMA list || primary
 	string newPrimary = parse_primary();
 	if (listType == "Q")
 	{
 		states.push_back(newPrimary);
-		stateNode* temp = new stateNode;
+		stateNode *temp = new stateNode;
 		temp->stateName = newPrimary;
 		listOfStates.push_back(temp);
 	}
@@ -513,12 +513,12 @@ void NfaParser::parse_list(string listType)
 
 void NfaParser::parse_transitions()
 {
-	//transitions -> transiton COMMA transitions || transition
+	// transitions -> transiton COMMA transitions || transition
 	if (peek(2) != "};")
 	{
 		parse_transition();
 	}
-	
+
 	if (peek(1) == ",")
 	{
 		expect(",");
@@ -528,7 +528,7 @@ void NfaParser::parse_transitions()
 
 void NfaParser::parse_transition()
 {
-	//transition->DELTA LPAREN primary COMMA,
+	// transition->DELTA LPAREN primary COMMA,
 	expect("DELTA");
 	expect("(");
 	string state1 = parse_primary();
@@ -555,7 +555,7 @@ void NfaParser::parse_transition()
 
 string NfaParser::parse_primary()
 {
-	//primary -> ID || NUM 
+	// primary -> ID || NUM
 	return expect("ID");
 }
 
@@ -629,7 +629,7 @@ int NfaParser::find(vector<string> list, string str)
 }
 
 //***********************************************************************************************************************************************************************************
-//NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA
+// NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA COMPUTATION NFA
 //***********************************************************************************************************************************************************************************
 
 int nfaexecution::findInAlphabet(NfaParser M, string w_ch)
@@ -734,16 +734,15 @@ vector<string> nfaexecution::readInputCharacter(vector<string> currentStates, st
 	return currentStates;
 }
 
-
 string nfaexecution::startExecution(string w, NfaParser M)
 {
 	vector<string> currentStates;
 	currentStates.push_back(M.startState);
 	while (w.length() != 0)
 	{
-		//check for epsilon transitions until there are no more epsilon transitions
+		// check for epsilon transitions until there are no more epsilon transitions
 		currentStates = checkEpsilonTransitions(currentStates, M);
-		//now read a character from the input
+		// now read a character from the input
 		currentStates = readInputCharacter(currentStates, w, M);
 		if (currentStates.size() == 1 && currentStates[0] == "USER_INPUT_INVALID")
 		{
@@ -752,9 +751,9 @@ string nfaexecution::startExecution(string w, NfaParser M)
 		w = w.substr(1, w.length());
 		currentStates.erase(unique(currentStates.begin(), currentStates.end()), currentStates.end());
 	}
-	//check one more time before bed
+	// check one more time before bed
 	currentStates = checkEpsilonTransitions(currentStates, M);
-	//sort so it looks pretty
+	// sort so it looks pretty
 	sort(currentStates.begin(), currentStates.end());
 	currentStates.erase(unique(currentStates.begin(), currentStates.end()), currentStates.end());
 
@@ -786,41 +785,41 @@ int main()
 		{
 			cout << "enter name of dfa text file." << endl;
 			cin >> txt;
-			//read dfa.txt
+			// read dfa.txt
 			fstream newfile;
 			newfile.open(txt, ios::in);
 			DfaParser dfaparser;
 			if (newfile.is_open())
 			{
 				dfaparser.dfaDef = "";
-				//concatenate each line of dfa.txt to dfaDef, ignoring all newlines in text file
+				// concatenate each line of dfa.txt to dfaDef, ignoring all newlines in text file
 				string line;
 				while (getline(newfile, line))
 				{
 					dfaparser.dfaDef += line;
 				}
-				dfaparser.clearWhiteSpace(); //remove spaces and tabs
+				dfaparser.clearWhiteSpace(); // remove spaces and tabs
 
 				dfaparser.parse_dfa();
 				/*
-				* parse dfa according to the CFG G (V, SIGMA, R, S)
-				* where V = {dfa, q, sigma, delta, start_state, f, list, transitions, transition, primary},
-				*		SIGMA = {Q, SIGMA, DELTA, START_STATE, F, EQUAL, LBRACE, RBRACE, SEMICOLON, LPAREN, RPAREN, ID, NUM},
-				*		R = {
-				*
-				*		dfa			-> q sigma delta start_state f,
-				*		q			-> Q EQUAL LBRACE list LBRACE SEMICOLON,
-				*		sigma		-> SIGMA EQUAL LBRACE list RBRACE SEMICOLON,
-				*		delta		-> DELTA EQUAL LBRACE transitions RBRACE SEMICOLON,
-				*		start_state	-> START_STATE EQUAL primary SEMICOLON,
-				*		f			-> F EQUAL LBRACE list RBRACE SEMICOLON,
-				*		list		-> primary COMMA list || primary,
-				*		transitions	-> transiton COMMA transitions || transition,
-				*		transition	-> DELTA LPAREN primary COMMA,
-				*		primary		-> ID}
-				*
-				*		S = dfa
-				*/
+				 * parse dfa according to the CFG G (V, SIGMA, R, S)
+				 * where V = {dfa, q, sigma, delta, start_state, f, list, transitions, transition, primary},
+				 *		SIGMA = {Q, SIGMA, DELTA, START_STATE, F, EQUAL, LBRACE, RBRACE, SEMICOLON, LPAREN, RPAREN, ID, NUM},
+				 *		R = {
+				 *
+				 *		dfa			-> q sigma delta start_state f,
+				 *		q			-> Q EQUAL LBRACE list LBRACE SEMICOLON,
+				 *		sigma		-> SIGMA EQUAL LBRACE list RBRACE SEMICOLON,
+				 *		delta		-> DELTA EQUAL LBRACE transitions RBRACE SEMICOLON,
+				 *		start_state	-> START_STATE EQUAL primary SEMICOLON,
+				 *		f			-> F EQUAL LBRACE list RBRACE SEMICOLON,
+				 *		list		-> primary COMMA list || primary,
+				 *		transitions	-> transiton COMMA transitions || transition,
+				 *		transition	-> DELTA LPAREN primary COMMA,
+				 *		primary		-> ID}
+				 *
+				 *		S = dfa
+				 */
 				string userInDFA = "";
 
 				while (userInDFA != "q")
@@ -861,20 +860,20 @@ int main()
 		{
 			cout << "enter name of nfa text file." << endl;
 			cin >> txt;
-			//read nfa.txt
+			// read nfa.txt
 			fstream newfile;
 			newfile.open(txt, ios::in);
 			NfaParser nfaparser;
 			if (newfile.is_open())
 			{
 				nfaparser.nfaDef = "";
-				//concatenate each line of dfa.txt to dfaDef, ignoring all newlines in text file
+				// concatenate each line of dfa.txt to dfaDef, ignoring all newlines in text file
 				string line;
 				while (getline(newfile, line))
 				{
 					nfaparser.nfaDef += line;
 				}
-				nfaparser.clearWhiteSpace(); //remove spaces and tabs
+				nfaparser.clearWhiteSpace(); // remove spaces and tabs
 
 				nfaparser.parse_nfa();
 
