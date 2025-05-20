@@ -1,0 +1,14 @@
+Q = {q0,q1,q2};
+SIGMA = {x,o};
+DELTA = 
+{
+	DELTA(q0,x) = q1,
+	DELTA(q0,o) = q0,
+	DELTA(q1,x) = q2,
+	DELTA(q1,o) = q1,
+	DELTA(q2,x) = q0,
+	DELTA(q2,o) = q2
+};
+START_STATE = q0;
+F = {q0};
+
