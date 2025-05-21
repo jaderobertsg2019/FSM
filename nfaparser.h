@@ -2,6 +2,7 @@
 #define __NFAPARSER_H__
 #include <iostream>
 #include <vector>
+using namespace std;
 
 class NfaParser
 {
@@ -15,7 +16,7 @@ public:
 	struct stateNode
 	{
 		string stateName;
-		vector<transitionNode*> listOfTransitions;
+		vector<transitionNode *> listOfTransitions;
 	};
 
 	string nfaDef;
@@ -41,7 +42,7 @@ public:
 	vector<string> states;
 	vector<string> inputAlphabet;
 	vector<string> finalStates;
-	vector<stateNode*> listOfStates;
+	vector<stateNode *> listOfStates;
 	string startState;
 };
 

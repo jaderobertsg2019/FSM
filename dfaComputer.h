@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <vector>
-#include "dfaparser.h"
+#include "dfaParser.h"
 using namespace std;
 
-class dfaexecution
+class DfaComputer
 {
 public:
 	int findCurrentStateInList(DfaParser M, string w_ch);

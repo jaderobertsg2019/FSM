@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <vector>
-#include "nfaparser.h"
+#include "nfaParser.h"
 using namespace std;
 
-class nfaexecution
+class NfaComputer
 {
 public:
 	int findCurrentStateInList(NfaParser M, string w_ch);
