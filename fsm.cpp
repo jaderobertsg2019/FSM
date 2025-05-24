@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include "menus.h"
 #include "dfaComputer.h"
 #include "dfaParser.h"
 #include "nfaComputer.h"
@@ -12,20 +13,18 @@ using namespace std;
 int main()
 {
 	string userIn = "";
-
+	Menus m;
 	while (userIn != "q")
 	{
-		cout << "Options: " << endl;
-		cout << "D: input a dfa" << endl;
-		cout << "N: input an nfa" << endl;
-		cout << "Q: quit" << endl;
+		m.setMenu(Menus::MAIN);
+		m.printCurrentMenu();
 		cin >> userIn;
 		userIn = tolower(userIn[0]);
-
 		string txt;
 		if (userIn == "d")
 		{
-			cout << "enter name of dfa text file." << endl;
+			m.setMenu(Menus::INPUT_DFA);
+			m.printCurrentMenu();
 			cin >> txt;
 			// read dfa.txt
 			fstream newfile;
@@ -57,8 +56,8 @@ int main()
 				 *		f			-> F EQUAL LBRACE list RBRACE SEMICOLON,
 				 *		list		-> primary COMMA list || primary,
 				 *		transitions	-> transiton COMMA transitions || transition,
-				 *		transition	-> DELTA LPAREN primary COMMA,
-				 *		primary		-> ID}
+				 *		transition	-> DELTA LPAREN primary COMMA primary RPAREN EQUALS primary,
+				 *		primary		-> ID || NUM}
 				 *
 				 *		S = dfa
 				 */
@@ -66,16 +65,16 @@ int main()
 
 				while (userInDFA != "q")
 				{
-					cout << "Options: " << endl;
-					cout << "W: run the DFA on an input string w" << endl;
-					cout << "Q: quit" << endl;
+					m.setMenu(Menus::DFA_OPS);
+					m.printCurrentMenu();
 					cin >> userInDFA;
 					userInDFA = tolower(userInDFA[0]);
 
 					string w;
 					if (userInDFA == "w")
 					{
-						cout << "run M on w" << endl;
+						m.setMenu(Menus::W_IN);
+						m.printCurrentMenu();
 						DfaComputer executor;
 						cin >> w;
 						if (executor.startExecution(w, dfaparser))
@@ -100,7 +99,8 @@ int main()
 		}
 		else if (userIn == "n")
 		{
-			cout << "enter name of nfa text file." << endl;
+			m.setMenu(Menus::INPUT_NFA);
+			m.printCurrentMenu();
 			cin >> txt;
 			// read nfa.txt
 			fstream newfile;
@@ -122,16 +122,16 @@ int main()
 				string userInNFA = "";
 				while (userInNFA != "q")
 				{
-					cout << "Options: " << endl;
-					cout << "W: run the NFA on an input string w" << endl;
-					cout << "Q: quit" << endl;
+					m.setMenu(Menus::NFA_OPS);
+					m.printCurrentMenu();
 					cin >> userInNFA;
 					userInNFA = tolower(userInNFA[0]);
 
 					string w;
 					if (userInNFA == "w")
 					{
-						cout << "run M on w" << endl;
+						m.setMenu(Menus::W_IN);
+						m.printCurrentMenu();
 						NfaComputer executor;
 						cin >> w;
 						string result = executor.startExecution(w, nfaparser);
